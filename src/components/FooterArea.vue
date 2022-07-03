@@ -1,6 +1,6 @@
 <template>
   <nav class="footer">
-    <a href="https://github.com/kompiuterizmas" target="_blank">Aurthor GitHub page</a>
+    <a href="https://github.com/kompiuterizmas" target="_blank">Author GitHub page</a>
   </nav>
 </template>
 <script></script>
