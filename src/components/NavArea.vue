@@ -5,18 +5,18 @@
     <router-link to="/addcategory">Add category</router-link>
     <form @submit.prevent="filterUsers">
     <div class="categories">select category:</div>
-    <select v-model="user.category">
+    <select>
       <option v-for="category in $store.state.categories" :key="category.id">
         {{ category.title }}
       </option>
     </select><div class="categories">select subcategory:</div>
-    <select v-model="user.subcat">
+    <select>
       <option v-for="subcat in $store.state.subcategories" :key="subcat.id">
         {{ subcat.subtitle }}
       </option>
     </select>
     <div class="categories">select subsubcategory:</div>
-    <select v-model="user.subsubcat">
+    <select>
       <option v-for="subsubcat in $store.state.subsubcategories" :key="subsubcat.id">
         {{ subsubcat.subsubtitle }}
       </option>
@@ -26,11 +26,12 @@
   </div>
 </template>
 <script>
+// import { useStore } from 'vuex';
 export default {
   name: "NavArea",
-  data() {
-    return {};
-  }
+setup (){
+  // const store = useStore();
+}
 };
 </script>
 <style>

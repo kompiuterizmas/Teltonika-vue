@@ -1,13 +1,13 @@
 <template>
   <div class="home">Please select action on left side menu</div>
 
-    <div id="home">
+    <!-- <div id="home">
     <form @submit.prevent="onSubmit">
       <input type="email" name="email" />
 
       <button>Sign up for newsletter</button>
     </form>
-  </div>
+  </div> -->
 </template>
 <script>
 // import { defineRule } from 'vee-validate';
