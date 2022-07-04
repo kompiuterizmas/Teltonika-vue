@@ -4,24 +4,28 @@
     <router-link to="/adduser">Add user</router-link>
     <router-link to="/addcategory">Add category</router-link>
     <form @submit.prevent="filterUsers">
-    <div class="categories">select category:</div>
-    <select>
-      <option v-for="category in $store.state.categories" :key="category.id">
-        {{ category.title }}
-      </option>
-    </select><div class="categories">select subcategory:</div>
-    <select>
-      <option v-for="subcat in $store.state.subcategories" :key="subcat.id">
-        {{ subcat.subtitle }}
-      </option>
-    </select>
-    <div class="categories">select subsubcategory:</div>
-    <select>
-      <option v-for="subsubcat in $store.state.subsubcategories" :key="subsubcat.id">
-        {{ subsubcat.subsubtitle }}
-      </option>
-    </select>
-    <button>Filter users</button>
+      <div class="categories">select category:</div>
+      <select>
+        <option v-for="category in $store.state.categories" :key="category.id">
+          {{ category.title }}
+        </option>
+      </select>
+      <div class="categories">select subcategory:</div>
+      <select>
+        <option v-for="subcat in $store.state.subcategories" :key="subcat.id">
+          {{ subcat.subtitle }}
+        </option>
+      </select>
+      <div class="categories">select subsubcategory:</div>
+      <select>
+        <option
+          v-for="subsubcat in $store.state.subsubcategories"
+          :key="subsubcat.id"
+        >
+          {{ subsubcat.subsubtitle }}
+        </option>
+      </select>
+      <button>Filter users</button>
     </form>
   </div>
 </template>
@@ -29,9 +33,12 @@
 // import { useStore } from 'vuex';
 export default {
   name: "NavArea",
-setup (){
+  methods: {
+// getUsers(param, value){
+// state.param.filter(x=>x.id === value);
+// }
+  }
   // const store = useStore();
-}
 };
 </script>
 <style>
