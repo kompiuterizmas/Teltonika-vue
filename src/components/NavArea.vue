@@ -3,21 +3,29 @@
     <router-link to="/">Home</router-link>
     <router-link to="/adduser">Add user</router-link>
     <router-link to="/addcategory">Add category</router-link>
-    <form @submit.prevent="filterUsers">
+    <form>
       <div class="categories">select category:</div>
-      <select>
-        <option v-for="category in $store.state.categories" :key="category.id">
+      <select v-model="a" @change="filterUsers(a, b, c)">
+        <option
+          v-for="category in $store.state.categories"
+          :key="category.id"
+          :value="category.id"
+        >
           {{ category.title }}
         </option>
       </select>
       <div class="categories">select subcategory:</div>
-      <select>
-        <option v-for="subcat in $store.state.subcategories" :key="subcat.id">
+      <select v-model="b" @change="filterUsers(a, b, c)">
+        <option
+          v-for="subcat in $store.state.subcategories"
+          :key="subcat.id"
+          :value="subcat.id"
+        >
           {{ subcat.subtitle }}
         </option>
       </select>
       <div class="categories">select subsubcategory:</div>
-      <select>
+      <select v-model="c" @change="filterUsers(a, b, c)">
         <option
           v-for="subsubcat in $store.state.subsubcategories"
           :key="subsubcat.id"
@@ -30,15 +38,31 @@
   </div>
 </template>
 <script>
-// import { useStore } from 'vuex';
+import { useStore } from "vuex";
 export default {
   name: "NavArea",
-  methods: {
-// getUsers(param, value){
-// state.param.filter(x=>x.id === value);
-// }
-  }
-  // const store = useStore();
+
+  setup() {
+    const store = useStore();
+    const filterUsers = (a, b, c) => {
+      if (b === undefined) {
+        return store.state.users.filter((x) => x.category === a);
+      } else if (c === undefined) {
+        return store.state.users.filter(
+          (x) => x.category === a && x.subcat === b
+        );
+      } else {
+        return store.state.users.filter(
+          (x) => x.category === a && x.subcat === b && x.subsubcat === c
+        );
+      }
+    };
+    return {
+      store,
+      filterUsers,
+    };
+  },
+  methods: {},
 };
 </script>
 <style>

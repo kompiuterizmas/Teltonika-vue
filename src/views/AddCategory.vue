@@ -1,4 +1,6 @@
-<template><form action=""><input type="text">kategorijos</form></template>
+<template>
+  <span>template for categories management</span>
+</template>
 <script>
 export default {
   name: "AddCategory",

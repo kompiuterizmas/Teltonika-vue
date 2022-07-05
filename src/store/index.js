@@ -91,14 +91,11 @@ export default createStore({
       },
     ],
   },
-  getters: {
-    // getUsers(param, value){
-    //   state.param.filter(x=>x.id === value);
-    //   },
-  },
+  getters: {},
   mutations: {
     ADD_USER(state, user) {
       state.users.push(user);
+      console.log(this.state.users)
     },
     ADD_CATEGORY(state, category) {
       state.categories.push(category);

@@ -1,19 +1,56 @@
 <template>
   <div class="user-form">
     <div><h1>Add new user</h1></div>
-    <form @submit.prevent="addNewUser" id="userform">
+    <Form @submit.prevent="addNewUser" id="userform">
       <label>enter new user first name:</label>
-      <input type="text" placeholder="first name" v-model="newUser.firstname" />
+      <field
+        name="firstname"
+        type="text"
+        placeholder="first name"
+        rules="required|alpha_spaces"
+        v-model="newUser.firstname"
+      />
+      <ErrorMessage name="alpha_spaces" />
       <label>enter new user last name:</label>
-      <input type="text" placeholder="last name" v-model="newUser.lastname"/>
+      <field
+        name="lastname"
+        type="text"
+        placeholder="last name"
+        rules="required|alpha_spaces"
+        v-model="newUser.lastname"
+      />
+      <ErrorMessage name="alpha_spaces" />
       <label>enter new user email address:</label>
-      <input type="email" placeholder="e-mail" v-model="newUser.email"/>
+      <field
+        id="email"
+        name="email"
+        type="email"
+        placeholder="e-mail"
+        rules="required|email"
+        v-model="newUser.email"
+      />
+      <ErrorMessage name="email" />
       <label>create new user password:</label>
-      <input type="password" placeholder="password" v-model="newUser.password.password"/>
-      <label>create new user password:</label>
-      <input type="password" placeholder="repeat password" v-model="newUser.password.confirm"/>
+      <field
+        id="password"
+        name="password"
+        type="password"
+        placeholder="password"
+        rules="required|min:5"
+        v-model="newUser.password"
+      />
+      <ErrorMessage name="password" />
+      <label>repeat password:</label>
+      <field
+        id="passwordConfirmation"
+        name="passwordConfirmation"
+        type="password"
+        placeholder="repeat password"
+        rules="required|confirmed:@password"
+      />
+      <ErrorMessage name="passwordConfirmation" />
       <label>select new user birth date:</label>
-      <input type="date" v-model="newUser.date"/>
+      <input type="date" v-model="newUser.birthdate" />
       <label>select new user gender:</label>
       <select v-model="newUser.gender">
         <option selected="true" disabled="disabled">select gender</option>
@@ -30,66 +67,97 @@
           {{ category.title }}
         </option>
       </select>
+      <label>select new user sub category:</label>
       <select v-model="newUser.subcat">
         <option
-          v-for="subcat in $store.state.categories.subcat"
+          v-for="subcat in $store.state.subcategories"
           :value="subcat.id"
           :key="subcat.id"
         >
-          {{ subcat.title }}
+          {{ subcat.subtitle }}
         </option>
       </select>
+      <label>select new user sub sub category:</label>
       <select v-model="newUser.subsubcat">
         <option
-          v-for="subsubcat in $store.state.subsubcat"
+          v-for="subsubcat in $store.state.subsubcategories"
           :value="subsubcat.id"
           :key="subsubcat.id"
         >
-          {{ subsubcat.title }}
+          {{ subsubcat.subsubtitle }}
         </option>
       </select>
-      <button>Add user</button>
-    </form>
+      <button type="submit">Add user</button>
+    </Form>
   </div>
 </template>
 <script>
 import { ref } from "vue";
 import { useStore } from "vuex";
+import { Field, Form, ErrorMessage, defineRule } from "vee-validate";
+import { required, email, alpha_spaces } from "@vee-validate/rules";
+
+defineRule("required", required);
+defineRule("email", email);
+defineRule("alpha_spaces", alpha_spaces);
+
+defineRule("min", (value, [min]) => {
+  if (value && value.length < min) {
+    return `Should be at least ${min} characters`;
+  }
+  return true;
+});
+
+defineRule("confirmed", (value, [other]) => {
+  if (value !== other) {
+    return `Passwords do not match`;
+  }
+  return true;
+});
+
 export default {
   name: "AddUserForm",
   setup() {
     const newUser = ref({
       firstname: "",
       lastname: "",
-      password: {
-        password: "",
-        confirm: "",
-      },
+      password: "",
       email: "",
-      date: "",
+      birthdate: "",
       gender: "",
       category: "",
       subcat: "",
       subsubcat: "",
     });
+
     const store = useStore();
     const addNewUser = () => {
-      store.commit('ADD_USER', {...newUser.value})
+      console.log(newUser);
+      store.commit("ADD_USER", { ...newUser.value });
     };
 
-    return { newUser, addNewUser, store };
+    return {
+      newUser,
+      addNewUser,
+      store,
+    };
   },
-  // methods: {
-  //   submitForm() {
-  //     alert("submit happen");
-  //   },
-  // },
+  components: {
+    Field,
+    Form,
+    ErrorMessage,
+  },
+  methods: {},
 };
 </script>
 <style>
 /* .user-form {
   width: 100%;
 } */
+span[role="alert"] {
+  color: red;
+  margin-bottom: 5px;
+}
 form * {
   margin: 5px;
 }

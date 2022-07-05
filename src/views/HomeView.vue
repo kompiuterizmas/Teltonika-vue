@@ -10,6 +10,9 @@
     <span>age: {{getAge(user.birthdate)}}</span>
     <span>gender: {{user.gender}}</span>
     <span>birth date: {{user.birthdate}}</span>
+    <span>category: {{user.category}}</span>
+    <span>sub category: {{user.subcat}}</span>
+    <span>sub sub category: {{user.subsubcat}}</span>
     </div>
   </div>
   </div>
@@ -24,9 +27,6 @@ export default {
       let t = new Date();
       let y = t.getFullYear();
       return y-x;
-    },
-    onSubmit() {
-      console.log('Submitted');
     },
   },
 };
